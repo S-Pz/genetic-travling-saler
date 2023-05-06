@@ -1,7 +1,7 @@
 from random import randint, shuffle
 
-n_cid = 100
-n_pop = 500
+n_cid = 8
+n_pop = 10
 
 # ////////////////////////////////////////////////////////////////////////////////
 
@@ -104,14 +104,18 @@ def crossover(populacao, indice):
     newpop = []
 
     j = n_pop
+
     for i in range(int(n_pop/2)):
+
         child1 = []
         child2 = []
         childP1 = []
         childP2 = []
         parent1 = []
         parent2 = []
+
         j -= 1
+
         parent1 = populacao[indice[i]]
         parent2 = populacao[indice[j]]
 
@@ -146,12 +150,12 @@ def printParents(populacao, indice):
     print()
 
 # ////////////////////////////////////////////////////////////////////////////////
-
+"""
 def melhorFit(fit, i):
     copia_fit = fit.copy()
     copia_fit.sort()
     print(f"Menor distância da geração {i}: {copia_fit[0]}")
-
+"""
 # ////////////////////////////////////////////////////////////////////////////////
 
 if __name__ == "__main__":
@@ -159,8 +163,9 @@ if __name__ == "__main__":
     populacao = criar_populacao()
     for i in range(50):
         fit = avaliacao(populacao, grafo)
-        melhorFit(fit, i)
+        #melhorFit(fit, i)
         pais = torneio(fit)
         indices = indice_pais(pais, fit)
         filhos = crossover(populacao, indices)
         populacao = filhos
+        printPopulacao(populacao)
