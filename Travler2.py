@@ -1,8 +1,8 @@
 from random import randint, shuffle
 
 # numero de cidades e populações
-n_cid = 300
-n_pop = n_cid * 20
+n_cid = 5
+n_pop = 6
 
 # grafo de ligações entre cidades
 def criar_grafo(n): 
@@ -78,17 +78,33 @@ def order_crossover(n_pop, pais, n_cid):
         filhos.append(pais[j])
     return filhos
 
+def mutation(filhos, mutation_rate):
+
+    print("\nAntes\t",filhos)
+
+    rate = randint(0, 100)/100
+
+    for i in range(len(filhos) - 1):
+        if rate < mutation_rate:
+            aux = filhos[i]
+            filhos[i] = filhos[i+1]
+            filhos[i+1] = aux
+    
+    print("\nDepois\t",filhos)
+    return filhos
+
 if __name__ == "__main__":
     grafo     = criar_grafo(n_cid)
     populacao = criar_populacao(n_cid, n_pop)
-    for gen in range(2000):
+    for gen in range(1 ):
         fitness_pop = avaliacao(n_cid, n_pop, populacao, grafo)
         copia = fitness_pop.copy()
         copia.sort()
-        print(f"Geração {gen}:\t{copia[0]}")
+        #print(f"Geração {gen}:\t{copia[0]}")
         ganhadores  = torneio(populacao, fitness_pop, n_pop)
         cruzados    = order_crossover(n_pop, ganhadores, n_cid)
         populacao   = cruzados
+        populacao = mutation(populacao, 0.5)
 
         #https://jaketae.github.io/study/genetic-algorithm/
         #https://www.inf.tu-dresden.de/content/institutes/ki/cl/study/summer14/pssai/slides/GA_for_TSP.pdf
